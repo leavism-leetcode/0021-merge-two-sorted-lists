@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Solution {
     public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode result = new ListNode(-1);
@@ -37,6 +35,22 @@ public class Solution {
         }
         return result.next;
     }
+    /*
+    This is exactly like mergeSort(), but just the merge() function
+    because the list is already sorted
+    */
+    public static ListNode recursiveMergeTwoLists(ListNode list1, ListNode list2) {
+        if (list1 == null) return list2;
+        if (list2 == null) return list1;
+
+        if(list1.val < list2.val) {
+            list1.next = recursiveMergeTwoLists(list1.next, list2);
+            return list1;
+        } else {
+            list2.next = recursiveMergeTwoLists(list1, list2.next);
+            return list2;
+        }
+    }
 
     public static void main(String[] args) {
         ListNode i3 = new ListNode(4);
@@ -47,6 +61,10 @@ public class Solution {
         ListNode l2 = new ListNode(2, l3);
         ListNode l1 = new ListNode(1, l2);
 
-        System.out.println(mergeTwoLists(i1, l1).val);
+        ListNode p1 = recursiveMergeTwoLists(l1, i1);
+        while(p1 != null) {
+            System.out.println(p1.val);
+            p1 = p1.next;
+        }
     }
 }
